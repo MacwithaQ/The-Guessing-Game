@@ -11,14 +11,47 @@ img {
   width: 50%;
 }
 
+.gameComps{
+}
+
 .entryField{
   border-radius: 20px;
   text-align: center;
   margin: 10px;
+  font-size:x-large;
 }
 
 .Button{
   margin: 10px;
+  transition: all .15s ease-in-out;
+  font-size: large;
+  padding: 10px;
+  background-color: royalblue;
+  border-radius: 30px;
+  border-style: solid;
+  background: rgb(2,0,36);
+  background: linear-gradient(349deg, rgba(2, 0, 36, 0.397) 0%, rgba(121,9,9,1) 31%, rgba(255,14,0,1) 84%);
 
 }
 
+.Button:hover{
+  transform: scale(1.1);
+}
+
+.gameText{
+  background: rgb(2,0,36);
+background: linear-gradient(349deg, rgba(2, 0, 36, 0.397) 0%, rgba(121,9,9,1) 31%, rgba(255,14,0,1) 84%);
+border-radius: 30px;
+padding: 10px;
+}
+
+h4{
+text-align: center;
+width: 400px;
+}
+
+.radar{
+  background-color: white;
+  border-radius: 30px;
+  padding: 10px;
+}
