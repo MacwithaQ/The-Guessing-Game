@@ -7,7 +7,6 @@ import radarsound from "../Assets/Radar-sound.wav";
 import sonarsound from "../Assets/Sonar.wav";
 import errorsound from "../Assets/Error_alert.wav";
 
-
 const Game = () => {
   // Loading sound assets and giving them variables to play them in diff functions
   let gunsound = new Audio(gunshot);
@@ -27,6 +26,7 @@ const Game = () => {
   );
   const [radarStatus, setRadarStatus] = useState(true);
   const [radarText, setRadarText] = useState("");
+
   const nameTyping = (event) => setAngle(event.target.value);
 
   // Initializing variable used in function
@@ -51,6 +51,7 @@ const Game = () => {
     } else if (reloadStatus === true) {
       setGameText("Shoot first before reloading!");
     } else if (ammo === 0) {
+      errorSound.play();
       setGameText("You are out of ammo, please restart the game");
     }
   }
@@ -76,28 +77,32 @@ const Game = () => {
       setRadarText(`The enemy sub is somewhere between ${lower} & ${upper}`);
       setTimeout(function () {
         radarTextHider();
-      }, 3000);
+      }, 1500);
     } else {
       errorSound.play();
       setRadarText("You have already used your radar hint");
       setTimeout(function () {
         radarTextHider();
-      }, 3000);
+      }, 1500);
     }
   }
 
   // Function used for the Shoot game button
   function shoot() {
     if (angle > 180 || angle < 0) {
+      errorSound.play();
       setGameText("Please enter an angle between 0-180");
     } else if (reloadStatus === false) {
+      errorSound.play();
       setGameText("Please Reload");
     } else if (
       Math.abs(randomNum - angle) <= 20 &&
       Math.abs(randomNum - angle) > 10 &&
       reloadStatus === true
     ) {
-      setGameText("You're close, within a 20 degree range");
+      setGameText(
+        "You're close, within a 20 degree range of the enemy submarine!"
+      );
       gunsound.play();
       setReloadStatus(false);
     } else if (
@@ -105,7 +110,9 @@ const Game = () => {
       Math.abs(randomNum - angle) > 20 &&
       reloadStatus === true
     ) {
-      setGameText("You're within a 40 degree range, try again");
+      setGameText(
+        "You're within a 40 degree range from the enemy submarine, try again"
+      );
       gunsound.play();
       setReloadStatus(false);
     } else if (
@@ -119,7 +126,7 @@ const Game = () => {
     } else if (Math.abs(randomNum - angle) <= 10 && reloadStatus === true) {
       explosionsound.play();
       setGameText(
-        "DIRECT HIT! GOOD JOB! Click Start/Reset and continue playing!"
+        "DIRECT HIT, GOOD JOB! Click Start/Reset and continue playing!"
       );
     }
   }
@@ -127,10 +134,15 @@ const Game = () => {
   return (
     <div className="gameComps">
       <h4>
-        Enter an angle between 0°-180° to shoot your missle at the enemy
-        submarine.If your number is within the 10 degree range of the enemy sub
+        Enter an angle between 0°-180° at which a missle is to be shot at the enemy
+        submarine.If your missle is within 10 degree range of the enemy sub
         it will be shot down.
       </h4>
+      <button
+        className="Button"
+        onClick={startGame}
+      >{`Start/Reset Game`}</button>
+
       <div className="gameprompts">
         <h4 className="gameText">{gameText}</h4>
       </div>
@@ -140,12 +152,6 @@ const Game = () => {
         placeholder="Enter Angle"
         onChange={nameTyping}
       />
-      <br />
-
-      <button
-        className="Button"
-        onClick={startGame}
-      >{`Start/Reset Game`}</button>
 
       <br />
 
